@@ -17,9 +17,13 @@
 
   <!-- 页面元数据 -->
   
-  <title>Hello World - Hexo</title>
+  <title>Python中的多元赋值 - Hexo</title>
+  
+    <meta name="keywords" content="Python">
   
 
+  
+    <meta name="description" content="Python中多元赋值原理">
   
 
   <!-- feed -->
@@ -406,7 +410,7 @@
  
 <div id="pjax-data" style="display: none"> 
   <div id="pjax-ispage">true</div> 
-  <div id="pjax-pageTitle">Hello World</div> 
+  <div id="pjax-pageTitle">Python中的多元赋值</div> 
   <div id="pjax-enable-cover">true</div> 
   <div id="pjax-comment-path"></div> 
   <div id="pjax-comment-placeholder"></div> 
@@ -446,7 +450,7 @@
     
     
       <h1 class="title">
-        Hello World
+        Python中的多元赋值
       </h1>
       <div class='new-meta-box'>
         
@@ -463,6 +467,13 @@
         
           
             
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="./categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a>
+    </a>
+  </div>
+
 
           
         
@@ -481,7 +492,7 @@
   <div class="new-meta-item browse leancloud">
     <a class='notlink'>
       
-      <div id="lc-pv" data-title="Hello World" data-path="./2020/09/14/hello-world/">
+      <div id="lc-pv" data-title="Python中的多元赋值" data-path="./2020/09/14/Python%E4%B8%AD%E7%9A%84%E5%A4%9A%E5%85%83%E8%B5%8B%E5%80%BC/">
         <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
         <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
         次浏览
@@ -498,19 +509,16 @@
 
 
   
-  <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+  <p>今天在做LeetCode时发现，有一道链表反转，其中一道答案可以用一句多元赋值概括。但自己在尝试理解这个代码时发现，会存在修改值的问题，比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x, y = y, x</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>这个如果按照逻辑顺序理解：假设x=1，y=2。先令x=y,此时x=2,然后令y=x,y应该等于2？那么就不能实现变量交换了？</p>
+<p>于是我在网上查找了关于Python多元赋值的特性，发现：</p>
+<blockquote>
+<p>Python中的多元赋值本质上是元组的地址变更</p>
+</blockquote>
+<p>变量名x, y都是引用，内存开辟两个空间分别存储1, 2，两个变量分别指向这两块地址。由这两个变量构造的元组tuple，它有两个元素，这两个元素并不是x,y这两个变量，而是这两个变量所指向的地址空间里的内容。如果此时再另x=4,此时在地址空间会另开辟出一块空间存储4，x进而指向这块空间，而元组内的两个值仍保持不变。</p>
+<p>所以对于 x, y = y, x 来说，首先由y,x所构成的元组(y,x)其实应该表示为(2,1),那么再从左到右赋值，就可以交换变量的值了。</p>
 
   
   
@@ -528,7 +536,7 @@
               
             
               
-                <p>本文永久链接是：<a href=http://liurd.com/2020/09/14/hello-world/>http://liurd.com/2020/09/14/hello-world/</a></p>
+                <p>本文永久链接是：<a href=http://liurd.com/2020/09/14/Python%E4%B8%AD%E7%9A%84%E5%A4%9A%E5%85%83%E8%B5%8B%E5%80%BC/>http://liurd.com/2020/09/14/Python%E4%B8%AD%E7%9A%84%E5%A4%9A%E5%85%83%E8%B5%8B%E5%80%BC/</a></p>
               
             
           </blockquote>
@@ -545,10 +553,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-09-14T09:52:21+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-08-12T14:24:42+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Sep 14, 2020</p>
+    <p>更新于：Aug 12, 2020</p>
   </a>
 </div>
 
@@ -556,6 +564,9 @@
       
         
           
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="./tags/Python/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Python</p></a></div>
+
 
         
       
@@ -567,7 +578,7 @@
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://liurd.com/2020/09/14/hello-world/&title=Hello World - Hexo&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://liurd.com/2020/09/14/Python%E4%B8%AD%E7%9A%84%E5%A4%9A%E5%85%83%E8%B5%8B%E5%80%BC/&title=Python中的多元赋值 - Hexo&summary="
           
           >
           
@@ -579,7 +590,7 @@
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://liurd.com/2020/09/14/hello-world/&title=Hello World - Hexo&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://liurd.com/2020/09/14/Python%E4%B8%AD%E7%9A%84%E5%A4%9A%E5%85%83%E8%B5%8B%E5%80%BC/&title=Python中的多元赋值 - Hexo&summary="
           
           >
           
@@ -591,7 +602,7 @@
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=http://liurd.com/2020/09/14/hello-world/&title=Hello World - Hexo&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://liurd.com/2020/09/14/Python%E4%B8%AD%E7%9A%84%E5%A4%9A%E5%85%83%E8%B5%8B%E5%80%BC/&title=Python中的多元赋值 - Hexo&summary="
           
           >
           
@@ -621,14 +632,11 @@
   
     <div class="prev-next">
       
-        <a class='prev' href='./2020/09/14/Python%E4%B8%AD%E7%9A%84%E5%A4%9A%E5%85%83%E8%B5%8B%E5%80%BC/'>
-          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Python中的多元赋值</p>
-          <p class='content'>今天在做LeetCode时发现，有一道链表反转，其中一道答案可以用一句多元赋值概括。但自己在尝试理解这个代码时发现，会存在修改值的问题，比如：
-1x, y = y, x
-
-这个如果按照逻辑顺序理...</p>
-        </a>
       
+        <a class='next' href='./2020/09/14/hello-world/'>
+          <p class='title'>Hello World<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any ...</p>
+        </a>
       
     </div>
   
@@ -650,6 +658,59 @@
 
 
 
+  <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.0/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
 
 </div>
 <aside class='l_side'>
@@ -659,20 +720,6 @@
     
 
 
-
-  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
-    
-  <header>
-    
-      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
-    
-  </header>
-
-
-    <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
-    </div>
-  </section>
 
 
   
