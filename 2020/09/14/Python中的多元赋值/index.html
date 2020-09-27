@@ -733,7 +733,7 @@
       <!--
  * @Author: your name
  * @Date: 2020-09-14 10:06:29
- * @LastEditTime: 2020-09-27 16:19:18
+ * @LastEditTime: 2020-09-27 16:35:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \undefinede:\00001  个人博客\Hexo\node_modules\hexo-theme-volantis\layout\_partial\footer.ejs
@@ -796,11 +796,9 @@
       
     
       
-        <div class='copyright'>
-        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
-
-        Copyright <i class="far fa-copyright"></i> 2018-2020
-        <a href="https://www.itrhx.com/" target="_blank"> Hexo </a>丨
+        <div class='copyright' style="color:rgb(0, 0, 0)">
+          Copyright <i class="far fa-copyright"></i> 2018-2020
+          <a href="https://liurd.com/" target="_blank"> Hexo </a>丨
         <!-- 网站运行时间 -->
       <span id="timeDate">正在载入...</span><span id="times"><span><i class="fa fa-spinner fa-spin"> </i></span></span>
       <script>
@@ -817,6 +815,7 @@
         document.getElementById("timeDate").innerHTML = "本站已运行 "
         document.getElementById("times").innerHTML = dnum +" 天 " + hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
         document.getElementById("times").style.color= "rgb(0, 0, 0)";
+        document.getElementById("timeDate").style.color= "rgb(0, 0, 0)";
           }
         setInterval("createtime()",250);
       </script>    
